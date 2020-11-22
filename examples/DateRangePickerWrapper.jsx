@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
+import dayjs from 'dayjs'
+
+
 import omit from 'lodash/omit';
 
 import DateRangePicker from '../src/components/DateRangePicker';
@@ -16,6 +19,12 @@ import {
   NAV_POSITION_TOP,
 } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+
+var LocalizedFormat = require("dayjs/plugin/localizedFormat");
+var localeData = require("dayjs/plugin/localeData");
+
+dayjs.extend(LocalizedFormat);
+dayjs.extend(localeData);
 
 const propTypes = {
   // example props for the demo
@@ -89,7 +98,7 @@ const defaultProps = {
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => dayjs.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 

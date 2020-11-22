@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import sinon from 'sinon-sandbox';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
@@ -26,7 +26,7 @@ describe('CalendarMonthGrid', () => {
   });
 
   it('does not generate duplicate months', () => {
-    const initialMonth = moment();
+    const initialMonth = dayjs();
     const wrapper = shallow((
       <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
     )).dive();
@@ -46,7 +46,7 @@ describe('CalendarMonthGrid', () => {
   });
 
   it('works with the same number of months', () => {
-    const initialMonth = moment();
+    const initialMonth = dayjs();
     const wrapper = shallow((
       <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
     )).dive();
@@ -70,7 +70,7 @@ describe('CalendarMonthGrid', () => {
     it('calls onMonthChange', () => {
       const onMonthChangeSpy = sinon.spy();
       const wrapper = shallow(<CalendarMonthGrid onMonthChange={onMonthChangeSpy} />).dive();
-      const currentMonth = moment();
+      const currentMonth = dayjs();
       const newMonthVal = (currentMonth.month() + 5) % 12;
       wrapper.instance().onMonthSelect(currentMonth, newMonthVal);
       expect(onMonthChangeSpy.callCount).to.equal(1);
@@ -81,7 +81,7 @@ describe('CalendarMonthGrid', () => {
     it('calls onYearChange', () => {
       const onYearChangeSpy = sinon.spy();
       const wrapper = shallow(<CalendarMonthGrid onYearChange={onYearChangeSpy} />).dive();
-      const currentMonth = moment();
+      const currentMonth = dayjs();
       const newMonthVal = (currentMonth.month() + 5) % 12;
       wrapper.instance().onYearSelect(currentMonth, newMonthVal);
       expect(onYearChangeSpy.callCount).to.equal(1);

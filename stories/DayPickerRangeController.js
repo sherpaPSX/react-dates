@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import from ';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
@@ -323,14 +323,14 @@ function renderKeyboardShortcutsPanel(panelProps) {
 }
 
 const datesList = [
-  moment(),
-  moment().add(1, 'days'),
-  moment().add(3, 'days'),
-  moment().add(9, 'days'),
-  moment().add(10, 'days'),
-  moment().add(11, 'days'),
-  moment().add(12, 'days'),
-  moment().add(13, 'days'),
+  ),
+  ).add(1, 'days'),
+  ).add(3, 'days'),
+  ).add(9, 'days'),
+  ).add(10, 'days'),
+  ).add(11, 'days'),
+  ).add(12, 'days'),
+  ).add(13, 'days'),
 ];
 
 storiesOf('DayPickerRangeController', module)
@@ -386,7 +386,7 @@ storiesOf('DayPickerRangeController', module)
     />
   )))
   .add('non-english locale', withInfo()(() => {
-    moment.locale('zh-cn');
+    locale('zh-cn');
     return (
       <DayPickerRangeControllerWrapper
         onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -417,7 +417,7 @@ storiesOf('DayPickerRangeController', module)
               value={month.month()}
               onChange={(e) => { onMonthSelect(month, e.target.value); }}
             >
-              {moment.months().map((label, value) => (
+              {months().map((label, value) => (
                 <option value={value}>{label}</option>
               ))}
             </select>
@@ -427,9 +427,9 @@ storiesOf('DayPickerRangeController', module)
               value={month.year()}
               onChange={(e) => { onYearSelect(month, e.target.value); }}
             >
-              <option value={moment().year() - 1}>Last year</option>
-              <option value={moment().year()}>{moment().year()}</option>
-              <option value={moment().year() + 1}>Next year</option>
+              <option value={).year() - 1}>Last year</option>
+              <option value={).year()}>{).year()}</option>
+              <option value={).year() + 1}>Next year</option>
             </select>
           </div>
         </div>
@@ -544,8 +544,8 @@ storiesOf('DayPickerRangeController', module)
   )))
   .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
     <DayPickerRangeControllerWrapper
-      minDate={moment().subtract(2, 'months').startOf('month')}
-      maxDate={moment().add(2, 'months').endOf('month')}
+      minDate={).subtract(2, 'months').startOf('month')}
+      maxDate={).add(2, 'months').endOf('month')}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
@@ -589,7 +589,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      initialVisibleMonth={() => moment().add(10, 'months')}
+      initialVisibleMonth={() => ).add(10, 'months')}
     />
   )))
   .add('with minimum nights set', withInfo()(() => (
@@ -598,7 +598,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      initialStartDate={moment().add(3, 'days')}
+      initialStartDate={).add(3, 'days')}
       autoFocusEndDate
     />
   )))
@@ -608,7 +608,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      initialStartDate={moment().add(3, 'days')}
+      initialStartDate={).add(3, 'days')}
       autoFocusEndDate
     />
   )))
@@ -625,8 +625,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isOutsideRange={(day) => !isInclusivelyAfterDay(day, moment())
-        || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))}
+      isOutsideRange={(day) => !isInclusivelyAfterDay(day, ))
+        || isInclusivelyAfterDay(day, ).add(2, 'weeks'))}
     />
   )))
   .add('with some blocked dates', withInfo()(() => (
@@ -650,13 +650,13 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isDayBlocked={(day) => moment.weekdays(day.weekday()) === 'Friday'}
+      isDayBlocked={(day) => weekdays(day.weekday()) === 'Friday'}
     />
   )))
   .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
     <DayPickerRangeControllerWrapper
-      minDate={moment().subtract(2, 'months').startOf('month')}
-      maxDate={moment().add(2, 'months').endOf('month')}
+      minDate={).subtract(2, 'months').startOf('month')}
+      maxDate={).add(2, 'months').endOf('month')}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
@@ -781,7 +781,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      initialStartDate={moment().add(3, 'days')}
+      initialStartDate={).add(3, 'days')}
       autoFocusEndDate
     />
   )));

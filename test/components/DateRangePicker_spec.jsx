@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow, mount } from 'enzyme';
@@ -290,7 +290,7 @@ describe('DateRangePicker', () => {
     });
 
     it('calls props.onClose with startDate and endDate if props.focusedInput != null', () => {
-      const startDate = moment();
+      const startDate = dayjs();
       const endDate = startDate.add(1, 'days');
       const onCloseStub = sinon.stub();
       const wrapper = shallow((
@@ -680,7 +680,7 @@ describe('DateRangePicker', () => {
 
     describe('initialVisibleMonth is not passed in', () => {
       it('DayPickerRangeController.props.initialVisibleMonth evaluates to startDate', () => {
-        const startDate = moment().add(10, 'days');
+        const startDate = dayjs().add(10, 'days');
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
@@ -693,7 +693,7 @@ describe('DateRangePicker', () => {
       });
 
       it('DayPickerRangeController.props.initialVisibleMonth evaluates to endDate if !startDate', () => {
-        const endDate = moment().add(5, 'days');
+        const endDate = dayjs().add(5, 'days');
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
@@ -706,7 +706,7 @@ describe('DateRangePicker', () => {
       });
 
       it('DayPickerRangeController.props.initialVisibleMonth evaluates to today if !startDate && !endDate', () => {
-        const today = moment();
+        const today = dayjs();
         const wrapper = shallow((
           <DateRangePicker {...requiredProps} focusedInput={START_DATE} />
         )).dive();
@@ -719,7 +719,7 @@ describe('DateRangePicker', () => {
   describe('dateOffsets', () => {
     describe('startDateOffset is passed in', () => {
       it('Should pass startDateOffset to DayPickerRangeController', () => {
-        const startDate = moment('2018-10-17');
+        const startDate = dayjs('2018-10-17');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePicker
@@ -739,7 +739,7 @@ describe('DateRangePicker', () => {
 
     describe('endDateOffset is passed in', () => {
       it('Should pass endDateOffset to DayPickerRangeController', () => {
-        const endDate = moment('2018-10-17', 'YYYY-MM-DD');
+        const endDate = dayjs('2018-10-17', 'YYYY-MM-DD');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePicker
@@ -761,7 +761,7 @@ describe('DateRangePicker', () => {
   describe('minDate and maxDate props', () => {
     describe('minDate is passed in', () => {
       it('Should pass minDate to DayPickerRangeController', () => {
-        const minDate = moment('2018-10-19');
+        const minDate = dayjs('2018-10-19');
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
@@ -775,7 +775,7 @@ describe('DateRangePicker', () => {
 
     describe('maxDate is passed in', () => {
       it('Should pass maxDate to DayPickerRangeController', () => {
-        const maxDate = moment('2018-12-19');
+        const maxDate = dayjs('2018-12-19');
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}

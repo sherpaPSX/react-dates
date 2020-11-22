@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePickerInputController from '../../src/components/SingleDatePickerInputController';
@@ -10,7 +10,7 @@ import SingleDatePickerInputController from '../../src/components/SingleDatePick
 import isSameDay from '../../src/utils/isSameDay';
 
 // Set to noon to mimic how days in the picker are configured internally
-const today = moment().startOf('day').hours(12);
+const today = dayjs().startOf('day').set('hour', 12);
 
 describe('SingleDatePickerInputController', () => {
   afterEach(() => {
@@ -42,7 +42,7 @@ describe('SingleDatePickerInputController', () => {
 
   describe('#onChange', () => {
     describe('valid future date string', () => {
-      const futureDateString = moment().add(10, 'days').format('YYYY-MM-DD');
+      const futureDateString = dayjs().add(10, 'days').format('YYYY-MM-DD');
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
@@ -59,7 +59,7 @@ describe('SingleDatePickerInputController', () => {
         ));
         wrapper.instance().onChange(futureDateString);
         const newDate = onDateChangeStub.getCall(0).args[0];
-        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
+        expect(isSameDay(newDate, dayjs(futureDateString))).to.equal(true);
       });
 
       it('calls props.onFocusChange once', () => {
@@ -106,13 +106,13 @@ describe('SingleDatePickerInputController', () => {
         ));
         wrapper.instance().onChange(futureDateString);
         const newDate = onCloseStub.getCall(0).args[0].date;
-        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
+        expect(isSameDay(newDate, dayjs(futureDateString))).to.equal(true);
       });
     });
 
     describe('matches custom display format', () => {
       const customFormat = 'YY|MM[foobar]DD';
-      const customFormatDateString = moment().add(5, 'days').format(customFormat);
+      const customFormatDateString = dayjs().add(5, 'days').format(customFormat);
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((

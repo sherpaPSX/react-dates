@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
@@ -20,7 +20,7 @@ import getVisibleDays from '../../src/utils/getVisibleDays';
 import { START_DATE, END_DATE, VERTICAL_SCROLLABLE } from '../../src/constants';
 
 // Set to noon to mimic how days in the picker are configured internally
-const today = moment().startOf('day').hours(12);
+const today = dayjs().startOf('day').set('hour', 12);
 
 function getCallsByModifier(stub, modifier) {
   return stub.getCalls().filter((call) => call.args[call.args.length - 1] === modifier);
@@ -116,13 +116,13 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: START_DATE,
-              initialVisibleMonth: () => moment(),
+              initialVisibleMonth: () => dayjs(),
             });
             expect(getStateForNewMonthSpy.callCount).to.equal(1);
           });
 
           it('sets state.currentMonth to getStateForNewMonth.currentMonth', () => {
-            const currentMonth = moment().add(10, 'months');
+            const currentMonth = dayjs().add(10, 'months');
             const getStateForNewMonthStub = sinon.stub(
               DayPickerRangeController.prototype,
               'getStateForNewMonth',
@@ -133,13 +133,13 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: START_DATE,
-              initialVisibleMonth: () => moment(),
+              initialVisibleMonth: () => dayjs(),
             });
             expect(wrapper.instance().state.currentMonth).to.equal(currentMonth);
           });
 
           it('sets state.visibleDays to getStateForNewMonth.visibleDays', () => {
-            const currentMonth = moment().add(10, 'months');
+            const currentMonth = dayjs().add(10, 'months');
             const visibleDays = getVisibleDays(currentMonth, 1);
             const getStateForNewMonthStub = sinon.stub(
               DayPickerRangeController.prototype,
@@ -151,7 +151,7 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: START_DATE,
-              initialVisibleMonth: () => moment(),
+              initialVisibleMonth: () => dayjs(),
             });
             expect(wrapper.instance().state.visibleDays).to.equal(visibleDays);
           });
@@ -168,25 +168,25 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: null,
-              initialVisibleMonth: () => moment(),
+              initialVisibleMonth: () => dayjs(),
             });
             expect(getStateForNewMonthSpy.callCount).to.equal(0);
           });
 
           it('does not change state.currentMonth', () => {
-            const currentMonth = moment().add(10, 'months');
+            const currentMonth = dayjs().add(10, 'months');
             const getStateForNewMonthStub = sinon.stub(
               DayPickerRangeController.prototype,
               'getStateForNewMonth',
             );
-            getStateForNewMonthStub.returns({ currentMonth: moment(), visibleDays: {} });
+            getStateForNewMonthStub.returns({ currentMonth: dayjs(), visibleDays: {} });
 
             const wrapper = shallow(<DayPickerRangeController {...props} focusedInput={null} />);
             wrapper.setState({ currentMonth });
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: null,
-              initialVisibleMonth: () => moment(),
+              initialVisibleMonth: () => dayjs(),
             });
             expect(wrapper.instance().state.currentMonth).to.equal(currentMonth);
           });
@@ -195,8 +195,8 @@ describe('DayPickerRangeController', () => {
             const visibleDays = {};
             const getStateForNewMonthStub = sinon.stub(DayPickerRangeController.prototype, 'getStateForNewMonth');
             getStateForNewMonthStub.returns({
-              currentMonth: moment(),
-              visibleDays: getVisibleDays(moment(), 1),
+              currentMonth: dayjs(),
+              visibleDays: getVisibleDays(dayjs(), 1),
             });
 
             const wrapper = shallow(<DayPickerRangeController {...props} focusedInput={null} />);
@@ -204,7 +204,7 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: null,
-              initialVisibleMonth: () => moment(),
+              initialVisibleMonth: () => dayjs(),
             });
             expect(wrapper.instance().state.visibleDays).to.equal(visibleDays);
           });
@@ -227,7 +227,7 @@ describe('DayPickerRangeController', () => {
         });
 
         it('sets state.currentMonth to getStateForNewMonth.currentMonth', () => {
-          const currentMonth = moment().add(10, 'months');
+          const currentMonth = dayjs().add(10, 'months');
           const getStateForNewMonthStub = sinon.stub(
             DayPickerRangeController.prototype,
             'getStateForNewMonth',
@@ -243,7 +243,7 @@ describe('DayPickerRangeController', () => {
         });
 
         it('sets state.visibleDays to getStateForNewMonth.visibleDays', () => {
-          const currentMonth = moment().add(10, 'months');
+          const currentMonth = dayjs().add(10, 'months');
           const visibleDays = getVisibleDays(currentMonth, 1);
           const getStateForNewMonthStub = sinon.stub(
             DayPickerRangeController.prototype,
@@ -273,7 +273,7 @@ describe('DayPickerRangeController', () => {
         });
 
         it('sets state.currentMonth to getStateForNewMonth.currentMonth', () => {
-          const currentMonth = moment().add(10, 'months');
+          const currentMonth = dayjs().add(10, 'months');
           const getStateForNewMonthStub = sinon.stub(DayPickerRangeController.prototype, 'getStateForNewMonth');
           getStateForNewMonthStub.returns({ currentMonth, visibleDays: {} });
 
@@ -286,7 +286,7 @@ describe('DayPickerRangeController', () => {
         });
 
         it('sets state.visibleDays to getStateForNewMonth.visibleDays', () => {
-          const currentMonth = moment().add(10, 'months');
+          const currentMonth = dayjs().add(10, 'months');
           const visibleDays = getVisibleDays(currentMonth, 1);
           const getStateForNewMonthStub = sinon.stub(DayPickerRangeController.prototype, 'getStateForNewMonth');
           getStateForNewMonthStub.returns({ currentMonth, visibleDays });
@@ -303,11 +303,11 @@ describe('DayPickerRangeController', () => {
       describe('startDate changed from one date to another', () => {
         it('removes previous `after-hovered-start` range', () => {
           const minimumNights = 5;
-          const startDate = moment().add(7, 'days');
+          const startDate = dayjs().add(7, 'days');
           const dayAfterStartDate = startDate.clone().add(1, 'day');
           const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
           const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
-          const nextStartDate = moment().add(4, 'days');
+          const nextStartDate = dayjs().add(4, 'days');
           const wrapper = shallow((
             <DayPickerRangeController
               onDatesChange={sinon.stub()}
@@ -332,10 +332,10 @@ describe('DayPickerRangeController', () => {
       describe('endDate changed from one date to another', () => {
         it('removes previous `selected-end-no-selected-start` when no start date selected', () => {
           const minimumNights = 5;
-          const endDate = moment().add(7, 'days');
+          const endDate = dayjs().add(7, 'days');
           const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
           const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
-          const nextEndDate = moment().add(4, 'days');
+          const nextEndDate = dayjs().add(4, 'days');
           const wrapper = shallow((
             <DayPickerRangeController
               onDatesChange={sinon.stub()}
@@ -365,7 +365,7 @@ describe('DayPickerRangeController', () => {
             DayPickerRangeController.prototype,
             'getStateForNewMonth',
           );
-          const endDate = moment();
+          const endDate = dayjs();
           const nextEndDate = endDate.clone().add(2, 'months');
 
           const wrapper = shallow((
@@ -406,7 +406,7 @@ describe('DayPickerRangeController', () => {
           it('deleteModifier gets called with old startDate and `selected-start`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
             const startDate = today;
-            const newStartDate = moment().add(1, 'day');
+            const newStartDate = dayjs().add(1, 'day');
             const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} />);
             wrapper.instance().componentWillReceiveProps({ ...props, startDate: newStartDate });
             const selectedStartCalls = getCallsByModifier(deleteModifierSpy, 'selected-start');
@@ -417,7 +417,7 @@ describe('DayPickerRangeController', () => {
           it('addModifier gets called with new startDate and `selected-start`', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
             const startDate = today;
-            const newStartDate = moment().add(1, 'day');
+            const newStartDate = dayjs().add(1, 'day');
             const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} />);
             wrapper.instance().componentWillReceiveProps({ ...props, startDate: newStartDate });
             const selectedStartCalls = getCallsByModifier(addModifierSpy, 'selected-start');
@@ -450,7 +450,7 @@ describe('DayPickerRangeController', () => {
           it('deleteModifier gets called with old endDate and `selected-end`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
             const endDate = today;
-            const newEndDate = moment().add(1, 'day');
+            const newEndDate = dayjs().add(1, 'day');
             const wrapper = shallow(<DayPickerRangeController {...props} endDate={endDate} />);
             wrapper.instance().componentWillReceiveProps({ ...props, endDate: newEndDate });
             const selectedEndCalls = getCallsByModifier(deleteModifierSpy, 'selected-end');
@@ -461,7 +461,7 @@ describe('DayPickerRangeController', () => {
           it('addModifier gets called with new endDate and `selected-end`', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
             const endDate = today;
-            const newEndDate = moment().add(1, 'day');
+            const newEndDate = dayjs().add(1, 'day');
             const wrapper = shallow(<DayPickerRangeController {...props} endDate={endDate} />);
             wrapper.instance().componentWillReceiveProps({ ...props, endDate: newEndDate });
             const selectedEndCalls = getCallsByModifier(addModifierSpy, 'selected-end');
@@ -476,7 +476,7 @@ describe('DayPickerRangeController', () => {
           describe('new startDate does not exist', () => {
             it('deleteModifierFromRange does not get called with `hovered-span`', () => {
               const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
-              const endDate = moment().add(10, 'days');
+              const endDate = dayjs().add(10, 'days');
               const wrapper = shallow(<DayPickerRangeController {...props} startDate={today} />);
               wrapper.instance().componentWillReceiveProps({ ...props, startDate: null, endDate });
               const hoverSpanCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'hovered-span');
@@ -518,8 +518,8 @@ describe('DayPickerRangeController', () => {
             it('deleteModifierFromRange gets called with old startDate + 1 day, old endDate, and `selected-span`', () => {
               const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
               const startDate = today;
-              const newStartDate = moment().add(7, 'days');
-              const endDate = moment().add(10, 'days');
+              const newStartDate = dayjs().add(7, 'days');
+              const endDate = dayjs().add(10, 'days');
               const dayAfterEndDate = endDate.clone().add(1, 'day');
               const wrapper = shallow((
                 <DayPickerRangeController {...props} startDate={startDate} endDate={endDate} />
@@ -539,7 +539,7 @@ describe('DayPickerRangeController', () => {
           describe('new startDate and new endDate both exist', () => {
             it('addModifierToRange gets calls with new startDate + 1 day, endDate, and `selected-span`', () => {
               const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
-              const startDate = moment().add(1, 'day');
+              const startDate = dayjs().add(1, 'day');
               const newStartDate = today;
               const dayAfterStartDate = newStartDate.clone().add(1, 'day');
               const endDate = today.clone().add(10, 'days');
@@ -572,7 +572,7 @@ describe('DayPickerRangeController', () => {
               wrapper.instance().componentWillReceiveProps({
                 ...props,
                 startDate,
-                endDate: moment().add(11, 'day'),
+                endDate: dayjs().add(11, 'day'),
               });
               const selectedSpanCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'selected-span');
               expect(selectedSpanCalls.length).to.equal(1);
@@ -586,7 +586,7 @@ describe('DayPickerRangeController', () => {
               const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
               const startDate = today;
               const dayAfterStartDate = startDate.clone().add(1, 'day');
-              const endDate = moment().add(1, 'day');
+              const endDate = dayjs().add(1, 'day');
               const newEndDate = today.clone().add(10, 'days');
               const wrapper = shallow(<DayPickerRangeController
                 {...props}
@@ -612,14 +612,14 @@ describe('DayPickerRangeController', () => {
           it('calls addModifierToRange with `after-hovered-start`', () => {
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
-            wrapper.instance().componentWillReceiveProps({ ...props, startDate: moment() });
+            wrapper.instance().componentWillReceiveProps({ ...props, startDate: dayjs() });
             const afterHoverStartCalls = getCallsByModifier(addModifierToRangeSpy, 'after-hovered-start');
             expect(afterHoverStartCalls.length).to.equal(1);
           });
 
           it('`after-hovered-start` addModifierToRange has span beginning with day after startDate', () => {
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
-            const startDate = moment();
+            const startDate = dayjs();
             const startSpan = toISODateString(startDate.clone().add(1, 'day'));
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.instance().componentWillReceiveProps({ ...props, startDate });
@@ -630,7 +630,7 @@ describe('DayPickerRangeController', () => {
           it('`after-hovered-start` addModifierToRange has span ending with startDate + minimumNights + 1', () => {
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
             const minimumNights = 3;
-            const startDate = moment();
+            const startDate = dayjs();
             const endSpan = toISODateString(startDate.clone().add(minimumNights + 1, 'day'));
             const wrapper = shallow((
               <DayPickerRangeController {...props} minimumNights={minimumNights} />
@@ -643,7 +643,7 @@ describe('DayPickerRangeController', () => {
 
         describe('start date did not change', () => {
           it('does not call addModifierToRange with `after-hovered-start`', () => {
-            const startDate = moment();
+            const startDate = dayjs();
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
             const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} />);
             wrapper.instance().componentWillReceiveProps({ ...props, startDate });
@@ -654,7 +654,7 @@ describe('DayPickerRangeController', () => {
 
         describe('new start date is falsy', () => {
           it('does not call addModifierToRange with `after-hovered-start`', () => {
-            const startDate = moment();
+            const startDate = dayjs();
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
             const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} />);
             wrapper.instance().componentWillReceiveProps({ ...props, startDate: null });
@@ -669,8 +669,8 @@ describe('DayPickerRangeController', () => {
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.instance().componentWillReceiveProps({
               ...props,
-              startDate: moment(),
-              endDate: moment(),
+              startDate: dayjs(),
+              endDate: dayjs(),
             });
             const afterHoverStartCalls = getCallsByModifier(addModifierToRangeSpy, 'after-hovered-start');
             expect(afterHoverStartCalls.length).to.equal(0);
@@ -715,7 +715,7 @@ describe('DayPickerRangeController', () => {
               />);
               wrapper.instance().componentWillReceiveProps({
                 ...props,
-                startDate: moment().add(5, 'days'),
+                startDate: dayjs().add(5, 'days'),
                 focusedInput,
                 minimumNights,
               });
@@ -782,7 +782,7 @@ describe('DayPickerRangeController', () => {
           describe('new focusedInput !== END_DATE', () => {
             it('does not call addModifierFromRange with `blocked-minimum-nights', () => {
               const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
-              const startDate = moment(today);
+              const startDate = dayjs(today);
               const wrapper = shallow(<DayPickerRangeController
                 {...props}
                 focusedInput={END_DATE}
@@ -809,7 +809,7 @@ describe('DayPickerRangeController', () => {
                 minimumNights={minimumNights}
               />);
               const { visibleDays } = wrapper.state();
-              let day = moment(today);
+              let day = dayjs(today);
               for (let i = 0; i < minimumNights; i += 1) {
                 const monthString = toISOMonthString(day);
                 const dateString = toISODateString(day);
@@ -826,7 +826,7 @@ describe('DayPickerRangeController', () => {
               });
 
               const { visibleDays: newVisibleDays } = wrapper.state();
-              day = moment(today);
+              day = dayjs(today);
               for (let i = 0; i < minimumNights; i += 1) {
                 const monthString = toISOMonthString(day);
                 const dateString = toISODateString(day);
@@ -875,7 +875,7 @@ describe('DayPickerRangeController', () => {
                 minimumNights,
               });
               const { visibleDays } = wrapper.state();
-              const day = moment(today);
+              const day = dayjs(today);
               for (let i = 0; i < minimumNights; i += 1) {
                 const monthString = toISOMonthString(day);
                 const dateString = toISODateString(day);
@@ -899,7 +899,7 @@ describe('DayPickerRangeController', () => {
                 minimumNights,
               });
               const { visibleDays } = wrapper.state();
-              const day = moment(today);
+              const day = dayjs(today);
               for (let i = 0; i < minimumNights; i += 1) {
                 const monthString = toISOMonthString(day);
                 const dateString = toISODateString(day);
@@ -1185,7 +1185,7 @@ describe('DayPickerRangeController', () => {
           it('calls deleteModifier with this.today and `today` modifier', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
-            wrapper.instance().today = moment().subtract(1, 'day');
+            wrapper.instance().today = dayjs().subtract(1, 'day');
             wrapper.instance().componentWillReceiveProps(props);
             const todayCalls = getCallsByModifier(deleteModifierSpy, 'today');
             expect(todayCalls.length).to.equal(1);
@@ -1194,7 +1194,7 @@ describe('DayPickerRangeController', () => {
           it('calls addModifier with new today and `today` modifiers', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
-            wrapper.instance().today = moment().subtract(1, 'day');
+            wrapper.instance().today = dayjs().subtract(1, 'day');
             wrapper.instance().componentWillReceiveProps(props);
             const todayCalls = getCallsByModifier(addModifierSpy, 'today');
             expect(todayCalls.length).to.equal(1);
@@ -1643,7 +1643,7 @@ describe('DayPickerRangeController', () => {
           it('calls addModifier with `selected-start-no-selected-end`', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
-            const startDate = moment();
+            const startDate = dayjs();
             wrapper.instance().componentWillReceiveProps({ ...props, startDate });
             const selectedStartNoSelectedEndCalls = getCallsByModifier(addModifierSpy, 'selected-start-no-selected-end');
             expect(selectedStartNoSelectedEndCalls.length).to.equal(1);
@@ -1654,7 +1654,7 @@ describe('DayPickerRangeController', () => {
         describe('start date has changed, and end date or previous end date are falsey', () => {
           it('calls deleteModifier with `selected-start-no-selected-end`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            const startDate = moment();
+            const startDate = dayjs();
             const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} />);
             const newStartDate = startDate.clone().add(1, 'days');
             wrapper.instance().componentWillReceiveProps({ ...props, startDate: newStartDate });
@@ -1670,7 +1670,7 @@ describe('DayPickerRangeController', () => {
           it('calls addModifier with `selected-end-no-selected-start`', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
-            const endDate = moment();
+            const endDate = dayjs();
             wrapper.instance().componentWillReceiveProps({ ...props, endDate });
             const selectedStartNoSelectedEndCalls = getCallsByModifier(addModifierSpy, 'selected-end-no-selected-start');
             expect(selectedStartNoSelectedEndCalls.length).to.equal(1);
@@ -1681,7 +1681,7 @@ describe('DayPickerRangeController', () => {
         describe('end date has changed, and start date or previous start date are falsey', () => {
           it('calls deleteModifier with `selected-end-no-selected-start`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            const endDate = moment();
+            const endDate = dayjs();
             const wrapper = shallow(<DayPickerRangeController {...props} endDate={endDate} />);
             const newEndDate = endDate.clone().add(1, 'days');
             wrapper.instance().componentWillReceiveProps({ ...props, endDate: newEndDate });
@@ -1694,7 +1694,7 @@ describe('DayPickerRangeController', () => {
         describe('start date has changed, and start date is truthy, and previous start date was falsey', () => {
           it('calls deleteModifier with `selected-end-no-selected-start`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            const endDate = moment();
+            const endDate = dayjs();
             const wrapper = shallow(<DayPickerRangeController {...props} endDate={endDate} />);
             const newStartDate = endDate.clone().subtract(1, 'days');
             wrapper.instance().componentWillReceiveProps({ ...props, startDate: newStartDate });
@@ -1710,7 +1710,7 @@ describe('DayPickerRangeController', () => {
           it('calls addModifierToRange with `before-hovered-end`', () => {
             const minimumNights = 1;
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
-            const endDate = moment();
+            const endDate = dayjs();
             const wrapper = shallow(
               <DayPickerRangeController
                 {...props}
@@ -1970,7 +1970,7 @@ describe('DayPickerRangeController', () => {
               onDatesChange={onDatesChangeStub}
             />
           ));
-          const tomorrow = moment(today).add(1, 'days');
+          const tomorrow = dayjs(today).add(1, 'days');
           wrapper.instance().onDayClick(tomorrow);
           expect(onDatesChangeStub.calledWith({
             startDate: tomorrow,
@@ -1982,7 +1982,7 @@ describe('DayPickerRangeController', () => {
       describe('arg is before props.endDate', () => {
         it('calls props.onDatesChange with startDate === arg and endDate === props.endDate', () => {
           const onDatesChangeStub = sinon.stub();
-          const tomorrow = moment(today).add(1, 'days');
+          const tomorrow = dayjs(today).add(1, 'days');
           const wrapper = shallow((
             <DayPickerRangeController
               focusedInput={START_DATE}
@@ -2046,7 +2046,7 @@ describe('DayPickerRangeController', () => {
           const wrapper = shallow((
             <DayPickerRangeController
               focusedInput={END_DATE}
-              startDate={moment(today).add(1, 'days')}
+              startDate={dayjs(today).add(1, 'days')}
               onDatesChange={onDatesChangeStub}
             />
           ));
@@ -2112,7 +2112,7 @@ describe('DayPickerRangeController', () => {
                   onFocusChange={onFocusChangeStub}
                 />
               ));
-              wrapper.instance().onDayClick(moment(today).add(1, 'days'));
+              wrapper.instance().onDayClick(dayjs(today).add(1, 'days'));
               expect(onFocusChangeStub.callCount).to.equal(1);
             });
 
@@ -2125,7 +2125,7 @@ describe('DayPickerRangeController', () => {
                   onFocusChange={onFocusChangeStub}
                 />
               ));
-              wrapper.instance().onDayClick(moment(today).add(1, 'days'));
+              wrapper.instance().onDayClick(dayjs(today).add(1, 'days'));
               expect(onFocusChangeStub.getCall(0).args[0]).to.equal(null);
             });
           });
@@ -2143,7 +2143,7 @@ describe('DayPickerRangeController', () => {
                 />
               ));
 
-              const endDate = moment(today).add(1, 'days');
+              const endDate = dayjs(today).add(1, 'days');
 
               wrapper.instance().onDayClick(endDate);
               const args = onCloseStub.getCall(0).args[0];
@@ -2178,7 +2178,7 @@ describe('DayPickerRangeController', () => {
 
     describe('props.startDateOffset / props.endDateOffset', () => {
       it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === endDateOffset(date)', () => {
-        const clickDate = moment(today).clone().add(2, 'days');
+        const clickDate = dayjs(today).clone().add(2, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2194,14 +2194,14 @@ describe('DayPickerRangeController', () => {
       });
 
       it('does not call props.onDatesChange with startDate === startDateOffset(date) and endDate === endDateOffset(date)', () => {
-        const clickDate = moment(today).clone().add(2, 'days');
+        const clickDate = dayjs(today).clone().add(2, 'days');
         const onDatesChangeStub = sinon.spy();
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
             startDateOffset={(day) => day.subtract(2, 'days')}
             endDateOffset={(day) => day.add(4, 'days')}
-            isOutsideRange={(day) => day.isAfter(moment(today))}
+            isOutsideRange={(day) => day.isAfter(dayjs(today))}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2209,13 +2209,13 @@ describe('DayPickerRangeController', () => {
       });
 
       it('does not call props.onDatesChange when dateOffset isOutsideRange', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
             endDateOffset={(day) => day.add(5, 'days')}
-            isOutsideRange={(day) => day.isAfter(moment(today).clone().add(1, 'days'))}
+            isOutsideRange={(day) => day.isAfter(dayjs(today).clone().add(1, 'days'))}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2223,7 +2223,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === selectedDate when endDateOffset not provided', () => {
-        const clickDate = moment(today).clone().add(2, 'days');
+        const clickDate = dayjs(today).clone().add(2, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2238,7 +2238,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange with startDate === selectedDate and endDate === endDateOffset(date) when startDateOffset not provided', () => {
-        const clickDate = moment(today).clone().add(12, 'days');
+        const clickDate = dayjs(today).clone().add(12, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2255,7 +2255,7 @@ describe('DayPickerRangeController', () => {
 
     describe('props.onDatesChange only called once in onDayClick', () => {
       it('calls props.onDatesChange once when focusedInput === START_DATE', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2272,7 +2272,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange once when focusedInput === END_DATE and there is no startDate', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2289,7 +2289,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange once when focusedInput === END_DATE and the day is a valid endDate', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const startDate = clickDate.clone().subtract(2, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
@@ -2308,7 +2308,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange once when focusedInput === END_DATE, the day is an invalid endDate, and disabled !== START_DATE', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2327,7 +2327,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange once when focusedInput === END_DATE and the day is an invalid endDate', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const startDate = clickDate.clone().add(1, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
@@ -2348,7 +2348,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange once when there is a startDateOffset', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2364,7 +2364,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls props.onDatesChange once when there is a endDateOffset', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2401,7 +2401,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls onDayClick with a day that prevents a focus change', () => {
-        const clickDate = moment(today);
+        const clickDate = dayjs(today);
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChange}
@@ -2416,7 +2416,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('calls onDayClick with a day that does not prevent a focus change', () => {
-        const clickDate = moment(today).clone().add(2, 'days');
+        const clickDate = dayjs(today).clone().add(2, 'days');
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChange}
@@ -2478,7 +2478,7 @@ describe('DayPickerRangeController', () => {
           hoverDate: today,
         });
         deleteModifierSpy.resetHistory();
-        wrapper.instance().onDayMouseEnter(moment().add(10, 'days'));
+        wrapper.instance().onDayMouseEnter(dayjs().add(10, 'days'));
         expect(deleteModifierSpy.callCount).to.equal(1);
         expect(deleteModifierSpy.getCall(0).args[1]).to.equal(today);
         expect(deleteModifierSpy.getCall(0).args[2]).to.equal('hovered');
@@ -2502,7 +2502,7 @@ describe('DayPickerRangeController', () => {
             ));
             wrapper.setState({ hoverDate });
             deleteModifierFromRangeSpy.resetHistory();
-            wrapper.instance().onDayMouseEnter(moment().add(10, 'days'));
+            wrapper.instance().onDayMouseEnter(dayjs().add(10, 'days'));
             const hoverSpanCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'hovered-span');
             expect(hoverSpanCalls.length).to.equal(1);
             expect(hoverSpanCalls[0].args[1]).to.equal(startDate);
@@ -2553,7 +2553,7 @@ describe('DayPickerRangeController', () => {
             ));
             wrapper.setState({ hoverDate });
             deleteModifierFromRangeSpy.resetHistory();
-            wrapper.instance().onDayMouseEnter(moment().add(10, 'days'));
+            wrapper.instance().onDayMouseEnter(dayjs().add(10, 'days'));
             expect(deleteModifierFromRangeSpy.callCount).to.equal(2);
             expect(deleteModifierFromRangeSpy.getCall(0).args[1]).to.equal(hoverDate);
             expect(deleteModifierFromRangeSpy.getCall(0).args[2]).to.equal(endDate);
@@ -2613,7 +2613,7 @@ describe('DayPickerRangeController', () => {
           describe('hoverDate is startDate', () => {
             it('adds new `after-hovered-start` range', () => {
               const minimumNights = 5;
-              const startDate = moment().add(7, 'days');
+              const startDate = dayjs().add(7, 'days');
               const dayAfterStartDate = startDate.clone().add(1, 'day');
               const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
               const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
@@ -2638,7 +2638,7 @@ describe('DayPickerRangeController', () => {
           describe('hoverDate is not startDate', () => {
             it('does not add new `after-hovered-start` range', () => {
               const minimumNights = 5;
-              const startDate = moment().add(7, 'days');
+              const startDate = dayjs().add(7, 'days');
               const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
               const wrapper = shallow((
                 <DayPickerRangeController
@@ -3179,7 +3179,7 @@ describe('DayPickerRangeController', () => {
         describe('startDate exists and is same as arg', () => {
           it('clears previous `after-hovered-start` range', () => {
             const minimumNights = 5;
-            const startDate = moment().add(13, 'days');
+            const startDate = dayjs().add(13, 'days');
             const dayAfterStartDate = startDate.clone().add(1, 'day');
             const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
             const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
@@ -3204,7 +3204,7 @@ describe('DayPickerRangeController', () => {
         describe('startDate exists and is not the same as arg', () => {
           it('does not call deleteModifierFromRange with `after-hovered-start`', () => {
             const minimumNights = 5;
-            const startDate = moment().add(13, 'days');
+            const startDate = dayjs().add(13, 'days');
             const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
             const wrapper = shallow((
               <DayPickerRangeController
@@ -3489,7 +3489,7 @@ describe('DayPickerRangeController', () => {
       wrapper.setState({
         currentMonth: today,
       });
-      const newMonth = moment().subtract(1, 'month');
+      const newMonth = dayjs().subtract(1, 'month');
       wrapper.instance().onPrevMonthClick();
       const visibleDays = Object.keys(wrapper.state().visibleDays);
       expect(visibleDays).to.include(toISOMonthString(newMonth));
@@ -3509,7 +3509,7 @@ describe('DayPickerRangeController', () => {
       });
       wrapper.instance().onPrevMonthClick();
       const visibleDays = Object.keys(wrapper.state().visibleDays);
-      expect(visibleDays).to.not.include(toISOMonthString(moment().add(numberOfMonths, 'months')));
+      expect(visibleDays).to.not.include(toISOMonthString(dayjs().add(numberOfMonths, 'months')));
     });
 
     it('calls this.getModifiers', () => {
@@ -3537,7 +3537,7 @@ describe('DayPickerRangeController', () => {
       wrapper.setState({
         currentMonth: today,
       });
-      const newMonth = moment().subtract(1, 'month');
+      const newMonth = dayjs().subtract(1, 'month');
       wrapper.instance().onPrevMonthClick();
       expect(onPrevMonthClickStub.callCount).to.equal(1);
       expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
@@ -3638,7 +3638,7 @@ describe('DayPickerRangeController', () => {
       wrapper.setState({
         currentMonth: today,
       });
-      const newMonth = moment().add(numberOfMonths + 1, 'months');
+      const newMonth = dayjs().add(numberOfMonths + 1, 'months');
       wrapper.instance().onNextMonthClick();
       const visibleDays = Object.keys(wrapper.state().visibleDays);
       expect(visibleDays).to.include(toISOMonthString(newMonth));
@@ -3685,7 +3685,7 @@ describe('DayPickerRangeController', () => {
       wrapper.setState({
         currentMonth: today,
       });
-      const newMonth = moment().add(1, 'month');
+      const newMonth = dayjs().add(1, 'month');
       wrapper.instance().onNextMonthClick();
       expect(onNextMonthClickStub.callCount).to.equal(1);
       expect(onNextMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
@@ -3705,7 +3705,7 @@ describe('DayPickerRangeController', () => {
             onDatesChange={sinon.stub()}
           />
         ));
-        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(moment().subtract(10, 'days'));
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(dayjs().subtract(10, 'days'));
         expect(firstFocusableDay.isSame(today, 'day')).to.equal(true);
       });
 
@@ -3728,7 +3728,7 @@ describe('DayPickerRangeController', () => {
     describe('focusedInput === END_DATE', () => {
       it('returns endDate if exists and is not blocked and startDate is falsy', () => {
         sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
-        const endDate = moment().add(10, 'days');
+        const endDate = dayjs().add(10, 'days');
         const wrapper = shallow((
           <DayPickerRangeController
             focusedInput={END_DATE}
@@ -3744,7 +3744,7 @@ describe('DayPickerRangeController', () => {
 
       it('returns startDate + minimumNights if startDate is truthy and endDate is not', () => {
         sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
-        const startDate = moment().add(10, 'days');
+        const startDate = dayjs().add(10, 'days');
         const minimumNights = 5;
         const wrapper = shallow((
           <DayPickerRangeController
@@ -3779,7 +3779,7 @@ describe('DayPickerRangeController', () => {
       it('returns next unblocked visible day after desired day if exists', () => {
         const isBlockedStub = sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
 
-        const startDate = moment().endOf('month').subtract(10, 'days');
+        const startDate = dayjs().endOf('month').subtract(10, 'days');
         const wrapper = shallow((
           <DayPickerRangeController
             focusedInput={END_DATE}
@@ -3802,7 +3802,7 @@ describe('DayPickerRangeController', () => {
     it('return object has the same number of days as input', () => {
       const monthISO = toISOMonthString(today);
       const visibleDays = {
-        [monthISO]: [today, moment().add(1, 'day'), moment().add(2, 'days')],
+        [monthISO]: [today, dayjs().add(1, 'day'), dayjs().add(2, 'days')],
       };
       const wrapper = shallow((
         <DayPickerRangeController
@@ -3818,7 +3818,7 @@ describe('DayPickerRangeController', () => {
       const getModifiersForDaySpy = sinon.spy(DayPickerRangeController.prototype, 'getModifiersForDay');
       const monthISO = toISOMonthString(today);
       const visibleDays = {
-        [monthISO]: [today, moment().add(1, 'day'), moment().add(2, 'days')],
+        [monthISO]: [today, dayjs().add(1, 'day'), dayjs().add(2, 'days')],
       };
       const wrapper = shallow((
         <DayPickerRangeController
@@ -3859,7 +3859,7 @@ describe('DayPickerRangeController', () => {
           isDayHighlighted={isDayHighlightedStub}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.size).to.equal(1);
       expect(modifiers.has('valid')).to.equal(true);
     });
@@ -3872,7 +3872,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('today')).to.equal(true);
     });
 
@@ -3884,7 +3884,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('blocked')).to.equal(true);
     });
 
@@ -3897,7 +3897,7 @@ describe('DayPickerRangeController', () => {
           isDayBlocked={isDayBlockedStub}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('blocked-calendar')).to.equal(true);
     });
 
@@ -3910,7 +3910,7 @@ describe('DayPickerRangeController', () => {
           isOutsideRange={isOutsideRangeStub}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('blocked-out-of-range')).to.equal(true);
     });
 
@@ -3923,7 +3923,7 @@ describe('DayPickerRangeController', () => {
           isDayHighlighted={isDayHighlightedStub}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('highlighted-calendar')).to.equal(true);
     });
 
@@ -3935,7 +3935,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('valid')).to.equal(true);
     });
 
@@ -3947,7 +3947,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('selected-start')).to.equal(true);
     });
 
@@ -3959,7 +3959,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('selected-end')).to.equal(true);
     });
 
@@ -3971,7 +3971,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('blocked-minimum-nights')).to.equal(true);
     });
 
@@ -3983,7 +3983,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('selected-span')).to.equal(true);
     });
 
@@ -3995,7 +3995,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('last-in-range')).to.equal(true);
     });
 
@@ -4005,7 +4005,7 @@ describe('DayPickerRangeController', () => {
         onDatesChange={sinon.stub()}
         onFocusChange={sinon.stub()}
       />);
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('hovered')).to.equal(true);
     });
 
@@ -4017,7 +4017,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('hovered-span')).to.equal(true);
     });
 
@@ -4029,7 +4029,7 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      const modifiers = wrapper.instance().getModifiersForDay(dayjs());
       expect(modifiers.has('after-hovered-start')).to.equal(true);
     });
   });
@@ -4056,7 +4056,7 @@ describe('DayPickerRangeController', () => {
         />
       ));
       sinon.stub(isDayVisible, 'default').returns(false);
-      const modifiers = wrapper.instance().addModifier(updatedDays, moment());
+      const modifiers = wrapper.instance().addModifier(updatedDays, dayjs());
       expect(modifiers).to.equal(updatedDays);
     });
 
@@ -4213,8 +4213,8 @@ describe('DayPickerRangeController', () => {
 
     it('calls addModifier for each day between the span start and the span end', () => {
       const numOfDays = 10;
-      const spanStart = moment();
-      const spanEnd = moment().add(numOfDays, 'days');
+      const spanStart = dayjs();
+      const spanEnd = dayjs().add(numOfDays, 'days');
       const wrapper = shallow((
         <DayPickerRangeController
           onDatesChange={sinon.stub()}
@@ -4227,8 +4227,8 @@ describe('DayPickerRangeController', () => {
 
     it('calls addModifier with modifier arg as modifier', () => {
       const modifier = 'foo-bar-baz';
-      const spanStart = moment();
-      const spanEnd = moment().add(10, 'days');
+      const spanStart = dayjs();
+      const spanEnd = dayjs().add(10, 'days');
       const wrapper = shallow((
         <DayPickerRangeController
           onDatesChange={sinon.stub()}
@@ -4243,8 +4243,8 @@ describe('DayPickerRangeController', () => {
     });
 
     it('does not call addModifier if span end is after span start', () => {
-      const spanStart = moment();
-      const spanEnd = moment().subtract(10, 'days');
+      const spanStart = dayjs();
+      const spanEnd = dayjs().subtract(10, 'days');
       const wrapper = shallow((
         <DayPickerRangeController
           onDatesChange={sinon.stub()}
@@ -4278,7 +4278,7 @@ describe('DayPickerRangeController', () => {
         />
       ));
       sinon.stub(isDayVisible, 'default').returns(false);
-      const modifiers = wrapper.instance().deleteModifier(updatedDays, moment());
+      const modifiers = wrapper.instance().deleteModifier(updatedDays, dayjs());
       expect(modifiers).to.equal(updatedDays);
     });
 
@@ -4394,8 +4394,8 @@ describe('DayPickerRangeController', () => {
 
     it('calls deleteModifier for each day between the span start and the span end', () => {
       const numOfDays = 10;
-      const spanStart = moment();
-      const spanEnd = moment().add(numOfDays, 'days');
+      const spanStart = dayjs();
+      const spanEnd = dayjs().add(numOfDays, 'days');
       const wrapper = shallow(<DayPickerRangeController
         onDatesChange={sinon.stub()}
         onFocusChange={sinon.stub()}
@@ -4406,8 +4406,8 @@ describe('DayPickerRangeController', () => {
 
     it('calls deleteModifier with modifier arg as modifier', () => {
       const modifier = 'foo-bar-baz';
-      const spanStart = moment();
-      const spanEnd = moment().add(10, 'days');
+      const spanStart = dayjs();
+      const spanEnd = dayjs().add(10, 'days');
       const wrapper = shallow(<DayPickerRangeController
         onDatesChange={sinon.stub()}
         onFocusChange={sinon.stub()}
@@ -4420,8 +4420,8 @@ describe('DayPickerRangeController', () => {
     });
 
     it('does not call deleteModifier if span end is after span start', () => {
-      const spanStart = moment();
-      const spanEnd = moment().subtract(10, 'days');
+      const spanStart = dayjs();
+      const spanEnd = dayjs().subtract(10, 'days');
       const wrapper = shallow(<DayPickerRangeController
         onDatesChange={sinon.stub()}
         onFocusChange={sinon.stub()}
@@ -4435,10 +4435,10 @@ describe('DayPickerRangeController', () => {
     describe('#doesNotMeetMinimumNights', () => {
       const MIN_NIGHTS = 3;
       describe('state.startDate !== null', () => {
-        const startDate = moment(today).add(3, 'days'); // rand day not equal to today
+        const startDate = dayjs(today).add(3, 'days'); // rand day not equal to today
         describe('props.focusedInput === END_DATE', () => {
           it('returns true if arg is < props.minimumNights after props.startDate', () => {
-            const testDate = moment(startDate).add(MIN_NIGHTS - 1, 'days');
+            const testDate = dayjs(startDate).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
               startDate={startDate}
@@ -4448,7 +4448,7 @@ describe('DayPickerRangeController', () => {
           });
 
           it('returns false if arg is > props.minimumNights after props.startDate', () => {
-            const testDate = moment(startDate).add(MIN_NIGHTS + 1, 'days');
+            const testDate = dayjs(startDate).add(MIN_NIGHTS + 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
               startDate={startDate}
@@ -4458,8 +4458,8 @@ describe('DayPickerRangeController', () => {
           });
 
           it('handles time differences of less than 1 full day properly', () => {
-            const partialDate = moment(startDate).add(5, 'minutes');
-            const testDate = moment(startDate).add(MIN_NIGHTS, 'days');
+            const partialDate = dayjs(startDate).add(5, 'minutes');
+            const testDate = dayjs(startDate).add(MIN_NIGHTS, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
               startDate={partialDate}
@@ -4471,7 +4471,7 @@ describe('DayPickerRangeController', () => {
 
         describe('props.focusedInput !== END_DATE', () => {
           it('returns false', () => {
-            const testDate = moment(startDate).add(MIN_NIGHTS - 1, 'days');
+            const testDate = dayjs(startDate).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={START_DATE}
               startDate={startDate}
@@ -4486,7 +4486,7 @@ describe('DayPickerRangeController', () => {
         describe('props.focusedInput === END_DATE', () => {
           it('returns true if arg - props.minimumNights is outside allowed range', () => {
             const isOutsideRange = (day) => !isInclusivelyAfterDay(day, today);
-            const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
+            const testDate = dayjs(today).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
               startDate={null}
@@ -4498,7 +4498,7 @@ describe('DayPickerRangeController', () => {
 
           it('returns false if arg - props.minimumNights is inside allowed range', () => {
             const isOutsideRange = (day) => !isInclusivelyAfterDay(day, today);
-            const testDate = moment(today).add(MIN_NIGHTS, 'days');
+            const testDate = dayjs(today).add(MIN_NIGHTS, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
               startDate={null}
@@ -4511,7 +4511,7 @@ describe('DayPickerRangeController', () => {
 
         describe('state.focusedInput !== END_DATE', () => {
           it('returns false', () => {
-            const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
+            const testDate = dayjs(today).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={START_DATE}
               startDate={null}
@@ -4529,12 +4529,12 @@ describe('DayPickerRangeController', () => {
         wrapper.setState({
           hoverDate: today,
         });
-        const testDate = moment(today).add(1, 'days');
+        const testDate = dayjs(today).add(1, 'days');
         expect(wrapper.instance().isDayAfterHoveredStartDate(testDate)).to.equal(true);
       });
 
       it('returns false if props.startDate is falsy', () => {
-        const testDate = moment(today).add(1, 'days');
+        const testDate = dayjs(today).add(1, 'days');
         const wrapper = shallow(<DayPickerRangeController startDate={null} />);
         wrapper.setState({
           hoverDate: today,
@@ -4543,10 +4543,10 @@ describe('DayPickerRangeController', () => {
       });
 
       it('returns false if props.endDate is truthy', () => {
-        const testDate = moment(today).add(1, 'days');
+        const testDate = dayjs(today).add(1, 'days');
         const wrapper = shallow(<DayPickerRangeController
           startDate={today}
-          endDate={moment(today).add(3, 'days')}
+          endDate={dayjs(today).add(3, 'days')}
         />);
         wrapper.setState({
           hoverDate: today,
@@ -4559,12 +4559,12 @@ describe('DayPickerRangeController', () => {
         wrapper.setState({
           hoverDate: today,
         });
-        const testDate = moment(today).add(2, 'days');
+        const testDate = dayjs(today).add(2, 'days');
         expect(wrapper.instance().isDayAfterHoveredStartDate(testDate)).to.equal(false);
       });
 
       it('returns false if state.hoverDate is not the same as props.startDate', () => {
-        const testDate = moment(today).add(1, 'days');
+        const testDate = dayjs(today).add(1, 'days');
         const wrapper = shallow(<DayPickerRangeController startDate={today} />);
         wrapper.setState({
           hoverDate: testDate,
@@ -4573,7 +4573,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('returns false if arg is day after state.hoverDate and props.minimumNights is 0', () => {
-        const testDate = moment(today).add(1, 'days');
+        const testDate = dayjs(today).add(1, 'days');
         const wrapper = shallow(<DayPickerRangeController startDate={today} minimumNights={0} />);
         wrapper.setState({
           hoverDate: today,
@@ -4590,7 +4590,7 @@ describe('DayPickerRangeController', () => {
 
       it('returns false if arg !== props.endDate', () => {
         const wrapper = shallow((
-          <DayPickerRangeController endDate={moment(today).add(1, 'days')} />
+          <DayPickerRangeController endDate={dayjs(today).add(1, 'days')} />
         ));
         expect(wrapper.instance().isEndDate(today)).to.equal(false);
       });
@@ -4618,7 +4618,7 @@ describe('DayPickerRangeController', () => {
       it('returns false if arg !== state.hoverDate', () => {
         const wrapper = shallow(<DayPickerRangeController focusedInput={START_DATE} />);
         wrapper.setState({
-          hoverDate: moment(today).add(1, 'days'),
+          hoverDate: dayjs(today).add(1, 'days'),
         });
         expect(wrapper.instance().isHovered(today)).to.equal(false);
       });
@@ -4630,14 +4630,14 @@ describe('DayPickerRangeController', () => {
           const HOVER_DATE_DIFF = 5;
           const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
           wrapper.setState({
-            hoverDate: moment(today).add(HOVER_DATE_DIFF, 'days'),
+            hoverDate: dayjs(today).add(HOVER_DATE_DIFF, 'days'),
           });
-          const testDate = moment(today).add(HOVER_DATE_DIFF - 1, 'days');
+          const testDate = dayjs(today).add(HOVER_DATE_DIFF - 1, 'days');
           expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(true);
         });
 
         it('returns true if arg is equal to state.hoverDate', () => {
-          const testDate = moment(today).add(3, 'days');
+          const testDate = dayjs(today).add(3, 'days');
           const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
           wrapper.setState({
             hoverDate: testDate,
@@ -4648,41 +4648,41 @@ describe('DayPickerRangeController', () => {
         it('returns false if arg is < props.startDate', () => {
           const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
           wrapper.setState({
-            hoverDate: moment(today).add(3, 'days'),
+            hoverDate: dayjs(today).add(3, 'days'),
           });
-          const testDate = moment(today).subtract(1, 'days');
+          const testDate = dayjs(today).subtract(1, 'days');
           expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
         });
 
         it('returns false if arg is > state.hoverDate', () => {
-          const hoverDate = moment(today).add(3, 'days');
+          const hoverDate = dayjs(today).add(3, 'days');
           const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
           wrapper.setState({
             hoverDate,
           });
-          const testDate = moment(hoverDate).add(1, 'days');
+          const testDate = dayjs(hoverDate).add(1, 'days');
           expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
         });
       });
 
       describe('props.startDate === null', () => {
         it('returns true if arg is in between state.hoverDate and props.endDate', () => {
-          const endDate = moment(today).add(5, 'days');
+          const endDate = dayjs(today).add(5, 'days');
           const wrapper = shallow(<DayPickerRangeController
             startDate={null}
-            endDate={moment(today).add(5, 'days')}
+            endDate={dayjs(today).add(5, 'days')}
           />);
           wrapper.setState({
             hoverDate: today,
           });
-          const testDate = moment(endDate).subtract(1, 'days');
+          const testDate = dayjs(endDate).subtract(1, 'days');
           expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(true);
         });
 
         it('returns true if arg is equal to state.hoverDate', () => {
           const wrapper = shallow(<DayPickerRangeController
             startDate={null}
-            endDate={moment(today).add(5, 'days')}
+            endDate={dayjs(today).add(5, 'days')}
           />);
           wrapper.setState({
             hoverDate: today,
@@ -4693,17 +4693,17 @@ describe('DayPickerRangeController', () => {
         it('returns false if arg is < state.hoverDate', () => {
           const wrapper = shallow(<DayPickerRangeController
             startDate={null}
-            endDate={moment(today).add(5, 'days')}
+            endDate={dayjs(today).add(5, 'days')}
           />);
           wrapper.setState({
             hoverDate: today,
           });
-          const testDate = moment(today).subtract(1, 'days');
+          const testDate = dayjs(today).subtract(1, 'days');
           expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
         });
 
         it('returns false if arg is > props.endDate', () => {
-          const endDate = moment(today).add(5, 'days');
+          const endDate = dayjs(today).add(5, 'days');
           const wrapper = shallow(<DayPickerRangeController
             startDate={null}
             endDate={endDate}
@@ -4711,7 +4711,7 @@ describe('DayPickerRangeController', () => {
           wrapper.setState({
             hoverDate: today,
           });
-          const testDate = moment(endDate).add(1, 'days');
+          const testDate = dayjs(endDate).add(1, 'days');
           expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
         });
       });
@@ -4719,59 +4719,59 @@ describe('DayPickerRangeController', () => {
 
     describe('#isInSelectedSpan', () => {
       it('returns true if props.startDate < arg < props.endDate', () => {
-        const endDate = moment(today).add(5, 'days');
+        const endDate = dayjs(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
           startDate={today}
           endDate={endDate}
         />);
-        const testDate = moment(endDate).subtract(1, 'days');
+        const testDate = dayjs(endDate).subtract(1, 'days');
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(true);
       });
 
       it('returns false if arg = props.startDate && arg < 12', () => {
-        const endDate = moment(today).add(5, 'days');
+        const endDate = dayjs(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
           startDate={today}
           endDate={endDate}
         />);
-        const testDate = moment(today.hours(10));
+        const testDate = dayjs(today.set('hour', 10));
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
       });
 
       it('returns false if arg = props.startDate && arg > 12', () => {
-        const endDate = moment(today).add(5, 'days');
+        const endDate = dayjs(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
           startDate={today}
           endDate={endDate}
         />);
-        const testDate = moment(today.hours(16));
+        const testDate = dayjs(today.set('hour', 16));
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
       });
 
       it('returns false if arg < props.startDate', () => {
-        const endDate = moment(today).add(5, 'days');
+        const endDate = dayjs(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
           startDate={today}
           endDate={endDate}
         />);
-        const testDate = moment(today).subtract(1, 'days');
+        const testDate = dayjs(today).subtract(1, 'days');
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
       });
 
       it('returns false if arg > props.endDate', () => {
-        const endDate = moment(today).add(5, 'days');
+        const endDate = dayjs(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
           startDate={today}
           endDate={endDate}
         />);
-        const testDate = moment(endDate).add(1, 'days');
+        const testDate = dayjs(endDate).add(1, 'days');
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
       });
 
       it('returns false if props.startDate === null', () => {
         const wrapper = shallow(<DayPickerRangeController
           startDate={null}
-          endDate={moment(today).add(5, 'days')}
+          endDate={dayjs(today).add(5, 'days')}
         />);
         expect(wrapper.instance().isInSelectedSpan(today)).to.equal(false);
       });
@@ -4781,7 +4781,7 @@ describe('DayPickerRangeController', () => {
           startDate={today}
           endDate={null}
         />);
-        const testDate = moment(today).add(1, 'days');
+        const testDate = dayjs(today).add(1, 'days');
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
       });
     });
@@ -4795,7 +4795,7 @@ describe('DayPickerRangeController', () => {
       it('returns true if arg is day before props.endDate and is in the selected span', () => {
         isInSelectedSpanStub.returns(true);
         const wrapper = shallow(<DayPickerRangeController
-          endDate={moment(today).add(1, 'days')}
+          endDate={dayjs(today).add(1, 'days')}
         />);
         expect(wrapper.instance().isLastInRange(today)).to.equal(true);
       });
@@ -4803,7 +4803,7 @@ describe('DayPickerRangeController', () => {
       it('returns false if arg is not in the selected span', () => {
         isInSelectedSpanStub.returns(false);
         const wrapper = shallow(<DayPickerRangeController
-          endDate={moment(today).add(1, 'days')}
+          endDate={dayjs(today).add(1, 'days')}
         />);
         expect(wrapper.instance().isLastInRange(today)).to.equal(false);
       });
@@ -4811,7 +4811,7 @@ describe('DayPickerRangeController', () => {
       it('returns false if arg is not the day before props.endDate', () => {
         isInSelectedSpanStub.returns(true);
         const wrapper = shallow(<DayPickerRangeController
-          endDate={moment(today).add(2, 'days')}
+          endDate={dayjs(today).add(2, 'days')}
         />);
         expect(wrapper.instance().isLastInRange(today)).to.equal(false);
       });
@@ -4825,7 +4825,7 @@ describe('DayPickerRangeController', () => {
 
       it('returns false if arg !== props.startDate', () => {
         const wrapper = shallow((
-          <DayPickerRangeController startDate={moment(today).add(1, 'days')} />
+          <DayPickerRangeController startDate={dayjs(today).add(1, 'days')} />
         ));
         expect(wrapper.instance().isStartDate(today)).to.equal(false);
       });
@@ -4910,48 +4910,48 @@ describe('DayPickerRangeController', () => {
 
       it('returns false if tomorrow', () => {
         const wrapper = shallow(<DayPickerRangeController />);
-        expect(wrapper.instance().isToday(moment(today).add(1, 'days'))).to.equal(false);
+        expect(wrapper.instance().isToday(dayjs(today).add(1, 'days'))).to.equal(false);
       });
 
       it('returns false if last month', () => {
         const wrapper = shallow(<DayPickerRangeController />);
-        expect(wrapper.instance().isToday(moment(today).subtract(1, 'months'))).to.equal(false);
+        expect(wrapper.instance().isToday(dayjs(today).subtract(1, 'months'))).to.equal(false);
       });
     });
 
     describe('#isFirstDayOfWeek', () => {
       it('returns true if first day of this week', () => {
         const wrapper = shallow(<DayPickerRangeController />);
-        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week'))).to.equal(true);
+        expect(wrapper.instance().isFirstDayOfWeek(dayjs().startOf('week'))).to.equal(true);
       });
 
       it('returns true if same day as firstDayOfWeek prop', () => {
         const firstDayOfWeek = 3;
         const wrapper = shallow(<DayPickerRangeController firstDayOfWeek={firstDayOfWeek} />);
-        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
+        expect(wrapper.instance().isFirstDayOfWeek(dayjs().startOf('week').day(firstDayOfWeek))).to.equal(true);
       });
 
       it('returns false if not the first day of the week', () => {
         const wrapper = shallow(<DayPickerRangeController />);
-        expect(wrapper.instance().isFirstDayOfWeek(moment().endOf('week'))).to.equal(false);
+        expect(wrapper.instance().isFirstDayOfWeek(dayjs().endOf('week'))).to.equal(false);
       });
     });
 
     describe('#isLastDayOfWeek', () => {
       it('returns true if last day of week', () => {
         const wrapper = shallow(<DayPickerRangeController />);
-        expect(wrapper.instance().isLastDayOfWeek(moment().endOf('week'))).to.equal(true);
+        expect(wrapper.instance().isLastDayOfWeek(dayjs().endOf('week'))).to.equal(true);
       });
 
       it('returns true if 6 days after firstDayOfWeek prop', () => {
         const firstDayOfWeek = 3;
         const wrapper = shallow(<DayPickerRangeController firstDayOfWeek={firstDayOfWeek} />);
-        expect(wrapper.instance().isLastDayOfWeek(moment().day(firstDayOfWeek).add(6, 'days'))).to.equal(true);
+        expect(wrapper.instance().isLastDayOfWeek(dayjs().day(firstDayOfWeek).add(6, 'days'))).to.equal(true);
       });
 
       it('returns false if not last of week', () => {
         const wrapper = shallow(<DayPickerRangeController />);
-        expect(wrapper.instance().isLastDayOfWeek(moment().startOf('week').add(1, 'day'))).to.equal(false);
+        expect(wrapper.instance().isLastDayOfWeek(dayjs().startOf('week').add(1, 'day'))).to.equal(false);
       });
     });
 

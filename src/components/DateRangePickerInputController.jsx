@@ -20,6 +20,13 @@ import toLocalizedDateString from '../utils/toLocalizedDateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
+var LocalizedFormat = require("dayjs/plugin/localizedFormat");
+var localeData = require("dayjs/plugin/localeData");
+
+dayjs.extend(LocalizedFormat);
+dayjs.extend(localeData);
+
+
 import {
   START_DATE,
   END_DATE,

@@ -22,6 +22,13 @@ import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
 import CloseButton from './CloseButton';
 
+var LocalizedFormat = require("dayjs/plugin/localizedFormat");
+var localeData = require("dayjs/plugin/localeData");
+
+dayjs.extend(LocalizedFormat);
+dayjs.extend(localeData);
+
+
 import {
   START_DATE,
   END_DATE,

@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import from ';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
@@ -11,14 +11,14 @@ import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
 const datesList = [
-  moment(),
-  moment().add(1, 'days'),
-  moment().add(3, 'days'),
-  moment().add(9, 'days'),
-  moment().add(10, 'days'),
-  moment().add(11, 'days'),
-  moment().add(12, 'days'),
-  moment().add(13, 'days'),
+  ),
+  ).add(1, 'days'),
+  ).add(3, 'days'),
+  ).add(9, 'days'),
+  ).add(10, 'days'),
+  ).add(11, 'days'),
+  ).add(12, 'days'),
+  ).add(13, 'days'),
 ];
 
 const selectedStyles = {
@@ -80,14 +80,14 @@ storiesOf('DRP - Day Props', module)
   .add('with minimum nights set', withInfo()(() => (
     <DateRangePickerWrapper
       minimumNights={3}
-      initialStartDate={moment().add(3, 'days')}
+      initialStartDate={).add(3, 'days')}
       autoFocusEndDate
     />
   )))
   .add('allows single day range', withInfo()(() => (
     <DateRangePickerWrapper
       minimumNights={0}
-      initialStartDate={moment().add(3, 'days')}
+      initialStartDate={).add(3, 'days')}
       autoFocusEndDate
     />
   )))
@@ -100,8 +100,8 @@ storiesOf('DRP - Day Props', module)
   .add('allows next two weeks only', withInfo()(() => (
     <DateRangePickerWrapper
       isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment()) ||
-        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+        !isInclusivelyAfterDay(day, )) ||
+        isInclusivelyAfterDay(day, ).add(2, 'weeks'))
       }
       autoFocus
     />
@@ -120,7 +120,7 @@ storiesOf('DRP - Day Props', module)
   )))
   .add('blocks fridays', withInfo()(() => (
     <DateRangePickerWrapper
-      isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+      isDayBlocked={day => weekdays(day.weekday()) === 'Friday'}
       autoFocus
     />
   )))

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import omit from 'lodash/omit';
+import dayjs from 'dayjs'
 
 import { withStyles, withStylesPropTypes, css } from 'react-with-styles';
 
@@ -12,6 +13,13 @@ import { DateRangePickerPhrases } from '../src/defaultPhrases';
 import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
 import isSameDay from '../src/utils/isSameDay';
+
+var LocalizedFormat = require("dayjs/plugin/localizedFormat");
+var localeData = require("dayjs/plugin/localeData");
+
+dayjs.extend(LocalizedFormat);
+dayjs.extend(localeData);
+
 
 const propTypes = {
   ...withStylesPropTypes,
@@ -87,7 +95,7 @@ const defaultProps = {
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => dayjs.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 };

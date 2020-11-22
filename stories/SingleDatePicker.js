@@ -1,6 +1,6 @@
 import React from 'react';
-import moment from 'moment';
-import momentJalaali from 'moment-jalaali';
+import from ';
+import alaali from 'jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
@@ -43,7 +43,7 @@ storiesOf('SingleDatePicker (SDP)', module)
     </div>
    )))
   .add('non-english locale (Chinese)', withInfo()(() => {
-    moment.locale('zh-cn');
+    locale('zh-cn');
     return (
       <SingleDatePickerWrapper
         placeholder="入住日期"
@@ -56,12 +56,12 @@ storiesOf('SingleDatePicker (SDP)', module)
     );
   }))
   .add('non-english locale (Persian)', withInfo()(() => {
-    moment.locale('fa');
+    locale('fa');
     return (
       <SingleDatePickerWrapper
         placeholder="تقویم فارسی"
-        renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
-        renderDayContents={day => momentJalaali(day).format('jD')}
+        renderMonthText={month => alaali(month).format('jMMMM jYYYY')}
+        renderDayContents={day => alaali(day).format('jD')}
       />
     );
   }))
@@ -78,13 +78,13 @@ storiesOf('SingleDatePicker (SDP)', module)
   )))
   .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
     <SingleDatePickerWrapper
-      minDate={moment().subtract(2, 'months').startOf('month')}
-      maxDate={moment().add(2, 'months').endOf('month')}
+      minDate={).subtract(2, 'months').startOf('month')}
+      maxDate={).add(2, 'months').endOf('month')}
     />
   )))
   .add('with custom isOutsideRange and month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => {
-    const minDate = moment().subtract(2, 'months').startOf('month')
-    const maxDate = moment().add(2, 'months').endOf('month')
+    const minDate = ).subtract(2, 'months').startOf('month')
+    const maxDate = ).add(2, 'months').endOf('month')
     const isOutsideRange = day => isInclusivelyBeforeDay(day, minDate) || isInclusivelyAfterDay(day, maxDate)
     return (
     <SingleDatePickerWrapper

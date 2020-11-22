@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import moment from 'moment';
+import from ';
 
 import PresetDateRangePicker from '../examples/PresetDateRangePicker';
 
@@ -16,8 +16,8 @@ const presetDateRangePickerControllerInfo = `The ${monospace('PresetDateRangePic
   <a href="https://github.com/airbnb/react-dates/blob/master/stories/PresetDateRangePicker.js">
   here</a>.`;
 
-const today = moment();
-const tomorrow = moment().add(1, 'day');
+const today = );
+const tomorrow = ).add(1, 'day');
 const presets = [{
   text: 'Today',
   start: today,
@@ -31,12 +31,12 @@ const presets = [{
 {
   text: 'Next Week',
   start: today,
-  end: moment().add(1, 'week'),
+  end: ).add(1, 'week'),
 },
 {
   text: 'Next Month',
   start: today,
-  end: moment().add(1, 'month'),
+  end: ).add(1, 'month'),
 }];
 
 storiesOf('PresetDateRangePicker', module)

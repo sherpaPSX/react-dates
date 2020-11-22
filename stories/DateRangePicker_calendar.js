@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import from ';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
@@ -160,7 +160,7 @@ storiesOf('DRP - Calendar Props', module)
   )))
   .add('with month specified on open', withInfo()(() => (
     <DateRangePickerWrapper
-      initialVisibleMonth={() => moment().add(10, 'months')}
+      initialVisibleMonth={() => ).add(10, 'months')}
       autoFocus
     />
   )))

@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import from ';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
@@ -9,14 +9,14 @@ import isSameDay from '../src/utils/isSameDay';
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const datesList = [
-  moment(),
-  moment().add(1, 'days'),
-  moment().add(3, 'days'),
-  moment().add(9, 'days'),
-  moment().add(10, 'days'),
-  moment().add(11, 'days'),
-  moment().add(12, 'days'),
-  moment().add(13, 'days'),
+  ),
+  ).add(1, 'days'),
+  ).add(3, 'days'),
+  ).add(9, 'days'),
+  ).add(10, 'days'),
+  ).add(11, 'days'),
+  ).add(12, 'days'),
+  ).add(13, 'days'),
 ];
 
 storiesOf('SDP - Day Props', module)
@@ -32,8 +32,8 @@ storiesOf('SDP - Day Props', module)
   .add('allows next two weeks only', withInfo()(() => (
     <SingleDatePickerWrapper
       isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment()) ||
-        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+        !isInclusivelyAfterDay(day, )) ||
+        isInclusivelyAfterDay(day, ).add(2, 'weeks'))
       }
       autoFocus
     />
@@ -52,7 +52,7 @@ storiesOf('SDP - Day Props', module)
   )))
   .add('blocks fridays', withInfo()(() => (
     <SingleDatePickerWrapper
-      isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+      isDayBlocked={day => weekdays(day.weekday()) === 'Friday'}
       autoFocus
     />
   )))

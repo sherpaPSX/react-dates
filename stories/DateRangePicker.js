@@ -1,6 +1,6 @@
 import React from 'react';
-import moment from 'moment';
-import momentJalaali from 'moment-jalaali';
+import from ';
+import alaali from 'jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
@@ -72,7 +72,7 @@ storiesOf('DateRangePicker (DRP)', module)
     </div>
   )))
   .add('non-english locale', withInfo()(() => {
-    moment.locale('zh-cn');
+    locale('zh-cn');
     return (
       <DateRangePickerWrapper
         showClearDates
@@ -87,16 +87,16 @@ storiesOf('DateRangePicker (DRP)', module)
     );
   }))
   .add('non-english locale (Persian)', withInfo()(() => {
-    moment.locale('fa');
-    momentJalaali.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
+    locale('fa');
+    alaali.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
     return (
       <DateRangePickerWrapper
         isRTL
-        stateDateWrapper={momentJalaali}
+        stateDateWrapper={alaali}
         startDatePlaceholderText="تاریخ شروع"
         endDatePlaceholderText="تاریخ پایان"
-        renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
-        renderDayContents={day => momentJalaali(day).format('jD')}
+        renderMonthText={month => alaali(month).format('jMMMM jYYYY')}
+        renderDayContents={day => alaali(day).format('jD')}
       />
     );
   }))
@@ -120,8 +120,8 @@ storiesOf('DateRangePicker (DRP)', module)
   )))
   .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
     <DateRangePickerWrapper
-      minDate={moment().subtract(2, 'months').startOf('month')}
-      maxDate={moment().add(2, 'months').endOf('month')}
+      minDate={).subtract(2, 'months').startOf('month')}
+      maxDate={).add(2, 'months').endOf('month')}
       numberOfMonths={2}
     />
   )));

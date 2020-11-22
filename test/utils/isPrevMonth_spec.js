@@ -1,32 +1,32 @@
-import moment from 'moment';
-import { expect } from 'chai';
+import dayjs from "dayjs";
+import { expect } from "chai";
 
-import isPrevMonth from '../../src/utils/isPrevMonth';
+import isPrevMonth from "../../src/utils/isPrevMonth";
 
-const today = moment();
-const lastMonth = moment().subtract(1, 'months');
-const twoMonthsAgo = moment().subtract(2, 'months');
+const today = dayjs();
+const lastMonth = dayjs().subtract(1, "months");
+const twoMonthsAgo = dayjs().subtract(2, "months");
 
-describe('isPrevMonth', () => {
-  it('returns true if second argument is the month before the first', () => {
+describe("isPrevMonth", () => {
+  it("returns true if second argument is the month before the first", () => {
     expect(isPrevMonth(today, lastMonth)).to.equal(true);
   });
 
-  it('returns false if second argument is not the month before the first', () => {
+  it("returns false if second argument is not the month before the first", () => {
     expect(isPrevMonth(lastMonth, today)).to.equal(false);
   });
 
-  it('returns false if second argument is more than one month before the first', () => {
+  it("returns false if second argument is more than one month before the first", () => {
     expect(isPrevMonth(today, twoMonthsAgo)).to.equal(false);
   });
 
-  describe('non-moment arguments', () => {
-    it('is false if first argument is not a moment object', () => {
+  describe("non-dayjs arguments", () => {
+    it("is false if first argument is not a dayjs object", () => {
       expect(isPrevMonth(null, today)).to.equal(false);
     });
 
-    it('is false if second argument is not a moment object', () => {
-      expect(isPrevMonth(today, 'foo')).to.equal(false);
+    it("is false if second argument is not a dayjs object", () => {
+      expect(isPrevMonth(today, "foo")).to.equal(false);
     });
   });
 });

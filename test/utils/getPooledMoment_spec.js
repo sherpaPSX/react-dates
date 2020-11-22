@@ -1,24 +1,24 @@
-import { expect } from 'chai';
-import moment from 'moment';
+import { expect } from "chai";
+import dayjs from "dayjs";
 
-import getPooledMoment from '../../src/utils/getPooledMoment';
+import getPooledMoment from "../../src/utils/getPooledMoment";
 
-describe('getPooledMoment', () => {
-  it('returns a moment given a day string', () => {
-    const momentObj = getPooledMoment('2017-12-10');
-    expect(moment.isMoment(momentObj)).to.equal(true);
-    expect(momentObj.format('YYYY MM DD')).to.equal('2017 12 10');
+describe("getPooledMoment", () => {
+  it("returns a dayjs given a day string", () => {
+    const dayjsObj = getPooledMoment("2017-12-10");
+    expect(dayjs.isDayjs(dayjsObj)).to.equal(true);
+    expect(dayjsObj.format("YYYY MM DD")).to.equal("2017 12 10");
   });
 
-  it('returns the same moment given the same day string', () => {
-    const momentObj1 = getPooledMoment('2017-12-10');
-    const momentObj2 = getPooledMoment('2017-12-10');
-    expect(momentObj1).to.equal(momentObj2);
+  it("returns the same dayjs given the same day string", () => {
+    const dayjsObj1 = getPooledMoment("2017-12-10");
+    const dayjsObj2 = getPooledMoment("2017-12-10");
+    expect(dayjsObj1).to.equal(dayjsObj2);
   });
 
-  it('returns a different moment given a different day string', () => {
-    const momentObj1 = getPooledMoment('2017-12-10');
-    const momentObj2 = getPooledMoment('2017-12-11');
-    expect(momentObj1).not.to.equal(momentObj2);
+  it("returns a different dayjs given a different day string", () => {
+    const dayjsObj1 = getPooledMoment("2017-12-10");
+    const dayjsObj2 = getPooledMoment("2017-12-11");
+    expect(dayjsObj1).not.to.equal(dayjsObj2);
   });
 });
