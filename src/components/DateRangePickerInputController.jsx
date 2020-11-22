@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
@@ -122,9 +122,9 @@ const defaultProps = {
   reopenPickerOnClearDates: false,
   withFullScreenPortal: false,
   minimumNights: 1,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, dayjs()),
   isDayBlocked: () => false,
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => dayjs.localeData().longDateFormat('L'),
 
   onFocusChange() {},
   onClose() {},

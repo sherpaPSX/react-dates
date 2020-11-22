@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -115,11 +115,11 @@ const defaultProps = {
   renderMonthElement: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, dayjs()),
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => dayjs.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,

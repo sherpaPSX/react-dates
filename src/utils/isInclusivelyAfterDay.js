@@ -1,8 +1,8 @@
-import moment from 'moment';
+import dayjs from "dayjs";
 
-import isBeforeDay from './isBeforeDay';
+import isBeforeDay from "./isBeforeDay";
 
 export default function isInclusivelyAfterDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+  if (!dayjs.isDayjs(a) || !dayjs.isDayjs(b)) return false;
   return !isBeforeDay(a, b);
 }

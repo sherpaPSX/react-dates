@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger, or } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import raf from 'raf';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
@@ -178,7 +178,7 @@ export const selectedStyles = {
 };
 
 const defaultProps = {
-  day: moment(),
+  day: dayjs(),
   daySize: DAY_SIZE,
   isOutsideDay: false,
   modifiers: new Set(),

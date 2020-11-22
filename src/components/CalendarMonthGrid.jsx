@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { addEventListener } from 'consolidated-events';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
@@ -70,7 +70,7 @@ const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   horizontalMonthPadding: 13,
-  initialMonth: moment(),
+  initialMonth: dayjs(),
   isAnimating: false,
   numberOfMonths: 1,
   modifiers: {},
@@ -126,7 +126,7 @@ class CalendarMonthGrid extends React.PureComponent {
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
 
-    this.locale = moment.locale();
+    this.locale = dayjs.locale();
     this.onMonthSelect = this.onMonthSelect.bind(this);
     this.onYearSelect = this.onYearSelect.bind(this);
   }
@@ -169,7 +169,7 @@ class CalendarMonthGrid extends React.PureComponent {
       newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
     }
 
-    const momentLocale = moment.locale();
+    const momentLocale = dayjs.locale();
     if (this.locale !== momentLocale) {
       this.locale = momentLocale;
       newMonths = newMonths.map((m) => m.locale(this.locale));

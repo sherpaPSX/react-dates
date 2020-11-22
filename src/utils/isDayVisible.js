@@ -1,8 +1,8 @@
-import moment from 'moment';
+import dayjs from "dayjs";
 
-import isBeforeDay from './isBeforeDay';
-import isAfterDay from './isAfterDay';
-import toISOMonthString from './toISOMonthString';
+import isBeforeDay from "./isBeforeDay";
+import isAfterDay from "./isAfterDay";
+import toISOMonthString from "./toISOMonthString";
 
 const startCacheOutsideDays = new Map();
 const endCacheOutsideDays = new Map();
@@ -10,18 +10,26 @@ const endCacheOutsideDays = new Map();
 const startCacheInsideDays = new Map();
 const endCacheInsideDays = new Map();
 
-export default function isDayVisible(day, month, numberOfMonths, enableOutsideDays) {
-  if (!moment.isMoment(day)) return false;
+export default function isDayVisible(
+  day,
+  month,
+  numberOfMonths,
+  enableOutsideDays
+) {
+  if (!dayjs.isDayjs(day)) return false;
 
   // Cloning is a little expensive, so we want to do it as little as possible.
 
   const startKey = toISOMonthString(month);
   // eslint-disable-next-line prefer-template
-  const endKey = startKey + '+' + numberOfMonths;
+  const endKey = startKey + "+" + numberOfMonths;
 
   if (enableOutsideDays) {
     if (!startCacheOutsideDays.has(startKey)) {
-      startCacheOutsideDays.set(startKey, month.clone().startOf('month').startOf('week'));
+      startCacheOutsideDays.set(
+        startKey,
+        month.clone().startOf("month").startOf("week")
+      );
     }
 
     if (isBeforeDay(day, startCacheOutsideDays.get(startKey))) return false;
@@ -29,8 +37,12 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
     if (!endCacheOutsideDays.has(endKey)) {
       endCacheOutsideDays.set(
         endKey,
-        month.clone().endOf('week').add(numberOfMonths - 1, 'months').endOf('month')
-          .endOf('week'),
+        month
+          .clone()
+          .endOf("week")
+          .add(numberOfMonths - 1, "months")
+          .endOf("month")
+          .endOf("week")
       );
     }
 
@@ -40,7 +52,7 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
   // !enableOutsideDays
 
   if (!startCacheInsideDays.has(startKey)) {
-    startCacheInsideDays.set(startKey, month.clone().startOf('month'));
+    startCacheInsideDays.set(startKey, month.clone().startOf("month"));
   }
 
   if (isBeforeDay(day, startCacheInsideDays.get(startKey))) return false;
@@ -48,7 +60,10 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
   if (!endCacheInsideDays.has(endKey)) {
     endCacheInsideDays.set(
       endKey,
-      month.clone().add(numberOfMonths - 1, 'months').endOf('month'),
+      month
+        .clone()
+        .add(numberOfMonths - 1, "months")
+        .endOf("month")
     );
   }
 

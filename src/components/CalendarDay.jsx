@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import raf from 'raf';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
@@ -32,7 +32,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  day: moment(),
+  day: dayjs(),
   daySize: DAY_SIZE,
   isOutsideDay: false,
   modifiers: new Set(),

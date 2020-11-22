@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 
@@ -174,7 +174,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     super(props);
 
     this.isTouchDevice = false;
-    this.today = moment();
+    this.today = dayjs();
 
     this.modifiers = {
       today: (day) => this.isToday(day),
@@ -293,7 +293,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          const momentObj = getPooledMoment(day);
+          const momentObj = getPooleddayjs(day);
           if (this.isBlocked(momentObj)) {
             modifiers = this.addModifier(modifiers, momentObj, 'blocked');
           } else {
@@ -327,7 +327,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       });
     }
 
-    const today = moment();
+    const today = dayjs();
     if (!isSameDay(this.today, today)) {
       modifiers = this.deleteModifier(modifiers, this.today, 'today');
       modifiers = this.addModifier(modifiers, today, 'today');
@@ -345,7 +345,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   }
 
   componentWillUpdate() {
-    this.today = moment();
+    this.today = dayjs();
   }
 
   onDayClick(day, e) {
@@ -628,12 +628,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
   isFirstDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === (firstDayOfWeek || dayjs.localeData().firstDayOfWeek());
   }
 
   isLastDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === ((firstDayOfWeek || dayjs.localeData().firstDayOfWeek()) + 6) % 7;
   }
 
   render() {

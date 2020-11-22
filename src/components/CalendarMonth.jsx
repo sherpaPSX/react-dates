@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -60,7 +60,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  month: moment(),
+  month: dayjs(),
   horizontalMonthPadding: 13,
   isVisible: true,
   enableOutsideDays: false,
@@ -97,7 +97,7 @@ class CalendarMonth extends React.PureComponent {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+        props.firstDayOfWeek == null ? dayjs.localeData().firstDayOfWeek() : props.firstDayOfWeek,
       ),
     };
 
@@ -125,7 +125,7 @@ class CalendarMonth extends React.PureComponent {
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+          firstDayOfWeek == null ? dayjs.localeData().firstDayOfWeek() : firstDayOfWeek,
         ),
       });
     }

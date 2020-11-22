@@ -1,9 +1,9 @@
-import moment from 'moment';
+import dayjs from "dayjs";
 
 const momentPool = new Map();
-export default function getPooledMoment(dayString) {
+export default function getPooleddayjs(dayString) {
   if (!momentPool.has(dayString)) {
-    momentPool.set(dayString, moment(dayString));
+    momentPool.set(dayString, dayjs(dayString));
   }
 
   return momentPool.get(dayString);

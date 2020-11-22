@@ -1,9 +1,9 @@
-import moment from 'moment';
+import dayjs from "dayjs";
 
-import isSameDay from './isSameDay';
+import isSameDay from "./isSameDay";
 
 export default function isPreviousDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  const dayBefore = moment(a).subtract(1, 'day');
+  if (!dayjs.isDayjs(a) || !dayjs.isDayjs(b)) return false;
+  const dayBefore = dayjs(a).subtract(1, "day");
   return isSameDay(dayBefore, b);
 }

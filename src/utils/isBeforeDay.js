@@ -1,7 +1,7 @@
-import moment from 'moment';
+import dayjs from "dayjs";
 
 export default function isBeforeDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+  if (!dayjs.isDayjs(a) || !dayjs.isDayjs(b)) return false;
 
   const aYear = a.year();
   const aMonth = a.month();

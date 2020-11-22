@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -135,7 +135,7 @@ export const defaultProps = {
   withPortal: false,
   onOutsideClick() {},
   hidden: false,
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: () => dayjs(),
   firstDayOfWeek: null,
   renderCalendarInfo: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
@@ -201,7 +201,7 @@ class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+    const currentMonth = props.hidden ? dayjs() : props.initialVisibleMonth();
 
     let focusedDate = currentMonth.clone().startOf('month');
     if (props.getFirstFocusableDay) {
@@ -642,7 +642,7 @@ class DayPicker extends React.PureComponent {
   getFirstDayOfWeek() {
     const { firstDayOfWeek } = this.props;
     if (firstDayOfWeek == null) {
-      return moment.localeData().firstDayOfWeek();
+      return dayjs.localeData().firstDayOfWeek();
     }
 
     return firstDayOfWeek;

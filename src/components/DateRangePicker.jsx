@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -121,13 +121,13 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, dayjs()),
   isDayHighlighted: () => false,
   minDate: undefined,
   maxDate: undefined,
 
   // internationalization
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => dayjs.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
@@ -466,7 +466,7 @@ class DateRangePicker extends React.PureComponent {
       ? this.onOutsideClick
       : undefined;
     const initialVisibleMonthThunk = initialVisibleMonth || (
-      () => (startDate || endDate || moment())
+      () => (startDate || endDate || dayjs())
     );
 
     const closeIcon = customCloseIcon || (
